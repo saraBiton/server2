@@ -46,7 +46,7 @@ class Sensor {
                 this.location = set_random_coordinates(loc);
             }
 
-        })
+        });
     }
 }
 
