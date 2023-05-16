@@ -14,9 +14,9 @@ client_ws_router.ws("/client-ws", (ws) => {
         if (String(msg) === "start") {
 
             while (true) {
-                ws.send(JSON.stringify(sensor_list))
+                ws.send(JSON.stringify(Object.values(sensor_list)))
                 await new Promise(
-                    (resolve) => setTimeout(resolve, 1 * 1000)
+                    (resolve) => setTimeout(resolve, 3 * 1000)
                 )
             }
         }
