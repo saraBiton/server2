@@ -1,19 +1,18 @@
-const WebSocket = require("ws");
+import WebSocket from 'ws';
 
-const ws_client = new WebSocket("ws://127.0.0.1:8000");
-
-const location = {
+const loc = {
     N: 31.8014688,
     E: 34.6524662
 }
 
 class Sensor {
-    constructor(id = "", location = location) {
+    constructor(id = "", location = loc) {
 
         this.id = id
         this.location = location;
         this.status = "OK"; // OK / ALERT /  SOS
         this.inflate_the_life_jacket = false;
+        this.ws_client;
     }
 
 
@@ -27,7 +26,10 @@ class Sensor {
     }
 
     start() {
-        ws_client.on("open", async () => {
+
+        this.ws_client = new WebSocket("ws://127.0.0.1:8000/sensor-ws");
+
+        this.ws_client.on("open", async () => {
 
             while (true) {
                 const data_to_send = {
@@ -36,12 +38,12 @@ class Sensor {
                     status: this.status
                 }
 
-                ws_client.send(JSON.stringify(data_to_send))
+                this.ws_client.send(JSON.stringify(data_to_send))
                 await new Promise(
                     (resolve) => setTimeout(resolve, 1 * 1000)
                 )
 
-                this.location = set_random_coordinates(location);
+                this.location = set_random_coordinates(loc);
             }
 
         })
@@ -64,13 +66,15 @@ function set_random_coordinates(location = location) {
     }
 
     if (Math.random() > 0.5) {
-        location.N = + random_num
+        location.N += random_num
     } else {
-        location.E = + random_num
+        location.E += random_num
     }
 
+    return location;
+
     function get_random_in_range(min, max) {
-        return (Math.random() * (max - min) + min).toFixed(5);
+        return Number((Math.random() * (max - min) + min).toFixed(5));
     }
 
     function make_number_negative(num) {

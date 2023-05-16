@@ -1,0 +1,24 @@
+
+/**@type {import("express-ws").Router} */
+
+import { Router } from "express";
+
+import { sensor_list } from "../../sensor-list.js";
+
+const sensor_ws_router = Router();
+
+sensor_ws_router.ws("/sensor-ws", (ws) => {
+
+    ws.on("message", (msg) => {
+
+        const sensor_data = JSON.parse(msg);
+
+        sensor_list[sensor_data.id] = sensor_data;
+
+        console.log(String(msg));
+    });
+});
+
+export {
+    sensor_ws_router
+};
