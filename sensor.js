@@ -5,11 +5,17 @@ import WebSocket from 'ws';
 const exemp_pos = { lat: 31.790245, lng: 34.625496 };
 
 class Sensor {
-    constructor(id = "", position =  exemp_pos ) {
+    constructor(id = "", position = exemp_pos) {
 
         this.id = id
+
+        // מיקום החיישן
         this.position = position;
+
+        // מצב החיישן
         this.status = "OK"; // OK / ALERT /  SOS
+
+        // האם לנפח את האפודה?
         this.inflate_the_life_jacket = false;
         this.ws_client;
     }
@@ -31,39 +37,60 @@ class Sensor {
         this.ws_client.on("open", async () => {
 
             while (true) {
+
+                this.position = set_random_coordinates(this.position);
+
+                this.status = set_random_status();
+
                 const data_to_send = {
                     id: this.id,
                     position: this.position,
                     status: this.status
                 }
 
-                this.ws_client.send(JSON.stringify(data_to_send))
+                this.ws_client.send(JSON.stringify(data_to_send));
+                
                 await new Promise(
-                    (resolve) => setTimeout(resolve, 1 * 1000)
+                    (resolve) => setTimeout(resolve, 0.3 * 1000)
                 )
 
-                this.position = set_random_coordinates(this.position);
+                
+
+                if(this.status !== "OK") {
+                    await new Promise(
+                        (resolve) => setTimeout(resolve, 5 * 1000)
+                    )
+                }
             }
 
         });
     }
 }
-
-
-const sensor1 = new Sensor("8t8768v7");
+const sensor1 = new Sensor("8t8768v7", {
+    lat: 31.791299,
+    lng: 34.626264
+});
 sensor1.start()
-const sensor2 = new Sensor("b87t876h");
+const sensor2 = new Sensor("b87t876h", {
+    lat: 31.790960,
+    lng: 34.626059
+});
 sensor2.start()
 
-
+/**
+ * פונקציה זו מייצרת תזוזות קטנות במיקום, 
+ * ע"מ לייצר אשלייה של תנועה
+ */
 function set_random_coordinates(position = exemp_pos) {
 
     let random_num = get_random_in_range(0.000001, 0.000009);
 
+    // הסתברות של 0.5 למספר שלילי
     if (Math.random() > 0.5) {
         random_num = make_number_negative(random_num);
     }
 
+    // הסתברות של 0.5 כדי לקבוע האם לשנות את האורך או את הרוחב
     if (Math.random() > 0.5) {
         position.lat += random_num
     } else {
@@ -72,11 +99,28 @@ function set_random_coordinates(position = exemp_pos) {
 
     return position;
 
-    function get_random_in_range(min, max) {
-        return Number((Math.random() * (max - min) + min).toFixed(5));
-    }
-
+    // הופך מספר לשלילי
     function make_number_negative(num) {
         return num - (num * 2)
     }
+}
+
+function set_random_status() {
+
+    let status = "OK";
+
+    if (Math.random() <= 0.02) {
+        status = "ALERT";
+
+        if (Math.random() <= 0.4) {
+            status = "SOS";
+        }
+    }
+
+    return status
+}
+
+// מייצר מספר אקראי בטווח מסויים
+function get_random_in_range(min, max, round_num = 5) {
+    return Number((Math.random() * (max - min) + min).toFixed(round_num));
 }
