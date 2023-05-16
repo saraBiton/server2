@@ -56,7 +56,7 @@ const sensor2 = new Sensor("b87t876h");
 sensor2.start()
 
 
-function set_random_coordinates(location = location) {
+function set_random_coordinates(position = exemp_pos) {
 
     let random_num = get_random_in_range(0.000, 0.009);
 
@@ -65,12 +65,12 @@ function set_random_coordinates(location = location) {
     }
 
     if (Math.random() > 0.5) {
-        location.N += random_num
+        position.lat += random_num
     } else {
-        location.E += random_num
+        position.lng += random_num
     }
 
-    return location;
+    return position;
 
     function get_random_in_range(min, max) {
         return Number((Math.random() * (max - min) + min).toFixed(5));
