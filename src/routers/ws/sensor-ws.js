@@ -15,7 +15,6 @@ sensor_ws_router.ws("/sensor-ws", (ws) => {
 
         sensor_list[sensor_data.id] = sensor_data;
 
-        console.log(String(msg));
     });
 });
 

@@ -58,7 +58,7 @@ sensor2.start()
 
 function set_random_coordinates(position = exemp_pos) {
 
-    let random_num = get_random_in_range(0.000, 0.009);
+    let random_num = get_random_in_range(0.000001, 0.000009);
 
     if (Math.random() > 0.5) {
         random_num = make_number_negative(random_num);
