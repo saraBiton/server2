@@ -1,15 +1,14 @@
 import WebSocket from 'ws';
 
-const loc = {
-    N: 31.8014688,
-    E: 34.6524662
-}
+
+
+const exemp_pos = { lat: 31.790245, lng: 34.625496 };
 
 class Sensor {
-    constructor(id = "", location = loc) {
+    constructor(id = "", position =  exemp_pos ) {
 
         this.id = id
-        this.location = location;
+        this.position = position;
         this.status = "OK"; // OK / ALERT /  SOS
         this.inflate_the_life_jacket = false;
         this.ws_client;
@@ -34,7 +33,7 @@ class Sensor {
             while (true) {
                 const data_to_send = {
                     id: this.id,
-                    location: this.location,
+                    position: this.position,
                     status: this.status
                 }
 
@@ -43,7 +42,7 @@ class Sensor {
                     (resolve) => setTimeout(resolve, 1 * 1000)
                 )
 
-                this.location = set_random_coordinates(loc);
+                this.position = set_random_coordinates(this.position);
             }
 
         })
