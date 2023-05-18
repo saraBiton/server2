@@ -1,7 +1,5 @@
 import WebSocket from 'ws';
 
-
-
 const exemp_pos = { lat: 31.790245, lng: 34.625496 };
 
 class Sensor {
@@ -36,6 +34,8 @@ class Sensor {
 
         this.ws_client.on("open", async () => {
 
+            console.log(`sensor ${this.id} connecting`);
+
             while (true) {
 
                 this.position = set_random_coordinates(this.position);
@@ -49,7 +49,7 @@ class Sensor {
                 }
 
                 this.ws_client.send(JSON.stringify(data_to_send));
-                
+
                 await new Promise(
                     (resolve) => setTimeout(resolve, 0.3 * 1000)
                 )
@@ -64,16 +64,7 @@ class Sensor {
         });
     }
 }
-const sensor1 = new Sensor("8t8768v7", {
-    lat: 31.791299,
-    lng: 34.626264
-});
-sensor1.start()
-const sensor2 = new Sensor("b87t876h", {
-    lat: 31.790960,
-    lng: 34.626059
-});
-sensor2.start()
+
 
 /**
  * פונקציה זו מייצרת תזוזות קטנות במיקום, 
@@ -122,3 +113,18 @@ function set_random_status() {
 function get_random_in_range(min, max, round_num = 5) {
     return Number((Math.random() * (max - min) + min).toFixed(round_num));
 }
+
+(function main() {
+
+    console.log("sensor start...");
+    const sensor1 = new Sensor("8t8768v7", {
+        lat: 31.791299,
+        lng: 34.626264
+    });
+    sensor1.start()
+    const sensor2 = new Sensor("b87t876h", {
+        lat: 31.790960,
+        lng: 34.626059
+    });
+    sensor2.start()
+})();
