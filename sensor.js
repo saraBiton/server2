@@ -53,9 +53,7 @@ class Sensor {
                 await new Promise(
                     (resolve) => setTimeout(resolve, 0.3 * 1000)
                 )
-
                 
-
                 if(this.status !== "OK") {
                     await new Promise(
                         (resolve) => setTimeout(resolve, 5 * 1000)
