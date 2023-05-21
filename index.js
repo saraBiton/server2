@@ -1,29 +1,14 @@
-const WebSocket = require("ws");
-const express = require("express");
+import { app } from './src/index.js';
+import { connect_db } from './src/config/db.js';
 
-const PORT = 8000
+import { User } from './src/models/index.js';
 
-const app = express()
+(async () => {
+	await connect_db();
 
-const myServer = app.listen(PORT, ()=>{
-    console.log(`listen on ${PORT}`);
-})
+	const PORT = 8000;
 
-const wsServer = new WebSocket.Server({
-    noServer: true
-})  
-
-wsServer.on("connection", function(ws) { 
-
-    console.log("connection");
-    ws.on("message", function(msg) {  
-        console.log(String(msg));
-    })
-})
-
-myServer.on('upgrade', async function upgrade(request, socket, head) {
-
-    wsServer.handleUpgrade(request, socket, head, function done(ws) {
-      wsServer.emit('connection', ws, request);
-    });
-});
+	app.listen(PORT, () => {
+		console.log(`listen on ${PORT}`);
+	});
+})();

@@ -1,5 +1,5 @@
 const sensor_list = {};
 
 export {
-    sensor_list
-}
+	sensor_list
+};
