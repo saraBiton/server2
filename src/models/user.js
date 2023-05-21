@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
 const User = mongoose.model('User', new mongoose.Schema({
-
 	first_name: {
 		type: String,
 		required: true
@@ -11,9 +10,9 @@ const User = mongoose.model('User', new mongoose.Schema({
 		required: true
 	},
 	password: String,
-	user_type: {
+	role: {
 		type: String,
-		emun: ['user', 'volunteer', 'parent'],
+		emun: ['user', 'volunteer', 'parent','director','lifeguard'],
 		required: true
 	},
 	phones: [

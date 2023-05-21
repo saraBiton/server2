@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
 
 const Sensor = mongoose.model('Sensor', new mongoose.Schema({
-
-
+	
 	user_id: {
 		type: mongoose.Types.ObjectId,
 		ref: 'User'
