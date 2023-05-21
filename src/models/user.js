@@ -10,6 +10,7 @@ const User = mongoose.model('User', new mongoose.Schema({
 		type: String,
 		required: true
 	},
+	password: String,
 	user_type: {
 		type: String,
 		emun: ['user', 'volunteer', 'parent'],
