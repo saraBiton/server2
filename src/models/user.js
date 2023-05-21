@@ -19,7 +19,6 @@ const User = mongoose.model('User', new mongoose.Schema({
 		{ phone: String }
 	],
 	linked_to_user: {
-
 	},
 	volunteer: {
 		lat: Number,
