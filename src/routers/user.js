@@ -5,7 +5,6 @@ const user_router = Router();
 
 user_router.get('/users', async (req, res, next) => {
 	const users = await User.find().exec();
-
 	res.json(users);
 });
 
