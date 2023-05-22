@@ -6,9 +6,10 @@ const Sensor = mongoose.model('Sensor', new mongoose.Schema({
 		type: mongoose.Types.ObjectId,
 		ref: 'User'
 	},
-	jacket_num: Number,
-	start_date: Date,
-	end_date: Date
+	lifeJacket_num: Number,
+	// start_date: Date,
+	// end_date: Date,
+	is_active: Boolean
 }));
 
 export {

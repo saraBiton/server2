@@ -12,14 +12,14 @@ const User = mongoose.model('User', new mongoose.Schema({
 	password: String,
 	role: {
 		type: String,
-		emun: ['user', 'volunteer', 'parent','director','lifeguard'],
+		enum: ['user', 'volunteer', 'parent','director','lifeguard'],
 		required: true
+	},
+	linked_to_user: {
 	},
 	phones: [
 		{ phone: String }
 	],
-	linked_to_user: {
-	},
 	volunteer: {
 		lat: Number,
 		lng: Number,

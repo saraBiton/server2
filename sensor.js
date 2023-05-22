@@ -1,16 +1,16 @@
 import WebSocket from 'ws';
 
-const exemp_pos = { lat: 31.790245, lng: 34.625496 };
+// const exemp_pos = { lat: 31.790245, lng: 34.625496 };
 
 class Sensor {
-	constructor (id = '', position = exemp_pos) {
+	constructor (id = '', position ) {
 		this.id = id;
 
 		// מיקום החיישן
 		this.position = position;
 
 		// מצב החיישן
-		this.status = 'OK'; // OK / ALERT /  SOS
+		this.status = 'OK'; // הכל בסדר-ירוקOK / -כתוםAttention-תשומת לב /  SOS-אדום, הזעקת כוחות הצלה
 
 		// האם לנפח את האפודה?
 		this.inflated_life_jacket = false;
@@ -25,8 +25,8 @@ class Sensor {
 		this.inflate_life_jacket();
 	}
 
-	on_alert () {
-		this.status = 'ALERT';
+	on_Attention () {
+		this.status = 'Attention';
 	}
 
 	start () {
@@ -41,8 +41,8 @@ class Sensor {
 				const random_status = set_random_status();
 
 				switch (random_status) {
-					case 'ALERT':
-						this.on_alert();
+					case 'Attention':
+						this.on_Attention();
 						break;
 					case 'SOS':
 						this.on_sos();
@@ -102,7 +102,7 @@ function set_random_status () {
 	let status = 'OK';
 
 	if (Math.random() <= 0.02) {
-		status = 'ALERT';
+		status = 'Attention';
 
 		if (Math.random() <= 0.4) {
 			status = 'SOS';

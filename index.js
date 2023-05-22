@@ -1,6 +1,5 @@
 import { app } from './src/index.js';
 import { connect_db } from './src/config/db.js';
-
 import { User } from './src/models/index.js';
 
 (async () => {
